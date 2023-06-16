@@ -1,4 +1,7 @@
+#include <algorithm>
+#include <exception>
 #include <iostream>
+#include <numeric>
 #include <string>
 #include <fstream>
 #include <vector>
@@ -8,7 +11,12 @@
 using namespace std;
 
 int getNumber(string string) {
-	return stoi(string);
+	vector<int> elf;
+	try {
+		return stoi(string);
+	} catch (exception) {
+		return -1;
+	}
 }
 
 int main() {
@@ -19,11 +27,22 @@ int main() {
 	if (new_file.is_open()) { 
     string calories;
         // Read data from the file object and put it into a string.
-        while (getline(new_file, calories)) { 
+				vector<int> elves;
+				vector<int> elf;
+        while (getline(new_file, calories)) {
             // Print the data of the string.
-            cout << getNumber(calories) << "\n";
+            int numCalories = getNumber(calories);
+						if (numCalories > 0) {
+							elf.push_back(numCalories);
+						} else {
+							int total = accumulate(elf.begin(), elf.end(), 0);
+							elves.push_back(total);
+							elf.clear();
+						}
         }
-        
+				auto max = max_element(elves.begin(), elves.end());
+				cout << *max;
+				
         // Close the file object.
         new_file.close();
 	}
