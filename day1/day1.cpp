@@ -40,9 +40,12 @@ int main() {
 							elf.clear();
 						}
         }
+				//Sort the elves by calories
+				sort(elves.begin(), elves.end());
 				auto max = max_element(elves.begin(), elves.end());
-				cout << *max;
-				
+
+				auto topThree = accumulate((elves.end() - 3), elves.end(), 0);
+				cout << topThree;
         // Close the file object.
         new_file.close();
 	}
