@@ -11,14 +11,15 @@
 #include <unordered_map>
 
 using namespace std;
+vector<string> matchup;
+int score;
 
 int parseMoves(string line) {
 	stringstream ss(line);
 	string move;
 	while (ss >> move) {
-		cout << move << endl;
+		matchup.push_back(move);
 	}
-	return 0;
 }
 
 int getTurnScore(string round) {
@@ -27,11 +28,12 @@ int getTurnScore(string round) {
 	base_scores["X"] = 1;
 	base_scores["Y"] = 2;
 	base_scores["Z"] = 3;
+	
+	matchup.clear();
+	parseMoves(round);
 
-	//
-
-	string turn;
-	string response;
+	score = score + base_scores.at(matchup[1]);
+	cout << score << "\n";
 }
 
 int main() {
@@ -44,7 +46,7 @@ int main() {
         // Read data from the file object and put it into a string.
         while (getline(new_file, turn)) {
             // Print the data of the string.
-						parseMoves(turn);
+						getTurnScore(turn);
         }
         // Close the file object.
         new_file.close();
