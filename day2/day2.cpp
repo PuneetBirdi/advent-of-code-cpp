@@ -14,26 +14,27 @@ using namespace std;
 vector<string> matchup;
 int score;
 
-int parseMoves(string line) {
-	stringstream ss(line);
-	string move;
-	while (ss >> move) {
-		matchup.push_back(move);
-	}
-}
-
 int getTurnScore(string round) {
 	// Set scores for base turn selection
 	unordered_map<string, int> base_scores;
-	base_scores["X"] = 1;
-	base_scores["Y"] = 2;
-	base_scores["Z"] = 3;
-	
-	matchup.clear();
-	parseMoves(round);
+	base_scores["A X"] = 3 + 1;
+	base_scores["A Y"] = 6 + 2;
+	base_scores["A Z"] = 0 + 3;
 
-	score = score + base_scores.at(matchup[1]);
-	cout << score << "\n";
+	base_scores["B X"] = 0 + 1;
+	base_scores["B Y"] = 3 + 2;
+	base_scores["B Z"] = 6 + 3;
+
+	base_scores["C X"] = 6 + 1;
+	base_scores["C Y"] = 0 + 2;
+	base_scores["C Z"] = 3 + 3;
+
+	//Add the base score
+	try {
+		score = score + base_scores.at(round);
+	} catch (exception) {
+		return -1;
+	}
 }
 
 int main() {
@@ -48,6 +49,7 @@ int main() {
             // Print the data of the string.
 						getTurnScore(turn);
         }
+				cout << score;
         // Close the file object.
         new_file.close();
 	}
