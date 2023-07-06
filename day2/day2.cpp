@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <cstring>
 #include <exception>
 #include <iostream>
 #include <numeric>
@@ -9,6 +10,7 @@
 #include <typeinfo>
 #include <numbers>
 #include <unordered_map>
+#include <string.h>
 
 using namespace std;
 vector<string> matchup;
@@ -29,12 +31,30 @@ int getTurnScore(string round) {
 	base_scores["C Y"] = 0 + 2;
 	base_scores["C Z"] = 3 + 3;
 
-	//Add the base score
+	unordered_map<string, char> responses_map;
+	responses_map["A X"] = 'Z';
+	responses_map["A Y"] = 'X';
+	responses_map["A Z"] = 'Y';
+
+	responses_map["B X"] = 'X';
+	responses_map["B Y"] = 'Y';
+	responses_map["B Z"] = 'Z';
+
+	responses_map["C X"] = 'Y';
+	responses_map["C Y"] = 'Z';
+	responses_map["C Z"] = 'X';
+
+	char score_lookup[3];
+	char response[2];
+	strncpy (response, 'q', 1);
 	try {
-		score = score + base_scores.at(round);
 	} catch (exception) {
-		return -1;
-	}
+		cout << "error";
+	};
+	strcat (score_lookup, response);
+	cout << score_lookup;
+	//score = score + base_scores.at(score_lookup);
+	return -1;
 }
 
 int main() {
